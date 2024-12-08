@@ -1,0 +1,145 @@
+<!-- Auxiliary Info -->
+
+<!-- Entry modal -->
+<div
+  class="modal fade"
+  id="add_category"
+  tabindex="-1"
+  aria-labelledby="add_category"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #baa68f">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          New category
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body bg-success-subtle">
+        <form
+          id="entry"
+          class="flex-column col-12 bg-light p-4 pt-3 pt-lg-0 rounded-4"
+          action="/categories"
+          method="post"
+        >
+          <div class="my-auto w-100">
+            <div class="mb-3">
+              <label for="category_name" class="form-label"
+                >Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="category_name"
+                id="category_name"
+              />
+            </div>
+            <div class="d-flex">
+              <button
+                type="submit"
+                class="btn btn-success mx-auto mb-3 mb-lg-0 px-5"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: #baa68f">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section
+  id="aux-components"
+  class="d-flex flex-column col-12 col-md-6 col-lg-3 col-xl-2 p-0 gap-4"
+>
+  <!-- Balance -->
+  <div id="balance">
+    <!-- Header -->
+    <div
+      class="balance_header d-flex p-2"
+      style="background-color: #baa68f"
+    >
+      <p class="h4 m-0 text-center flex-grow-1">Balance</p>
+    </div>
+    <!-- Content -->
+    <div class="balance_body bg-light p-2">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for account in accounts %}
+          <tr>
+            <td>{{ account.name }}</td>
+            <td>${{ '{:,.2f}'.format(account.balance) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="fw-bold">
+            <td>Total</td>
+            <td>${{ '{:,.2f}'.format(total_balance) }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <div id="category" class="d-flex flex-column flex-grow-1">
+    <!-- Header -->
+    <div
+      class="category_header d-flex p-2"
+      style="background-color: #baa68f"
+    >
+      <p class="h4 m-0 text-center flex-grow-1">Categories</p>
+    </div>
+
+    <!-- Category + -->
+    <div class="d-flex py-2 justify-content-center bg-light">
+      <button
+        type="button"
+        class="btn btn-success text-white mx-auto px-5"
+        data-bs-toggle="modal"
+        data-bs-target="#add_category"
+      >
+        Add category
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="category_body bg-light p-2">
+      <table class="table">
+        <tbody>
+          {% for category in categories %}
+          <tr>
+            <td>{{ category.name }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- col-12 col-sm-6 col-lg-2 -->
+<!-- col-12 col-lg-7 col-xl-8 -->

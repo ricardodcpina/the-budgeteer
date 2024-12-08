@@ -1,0 +1,151 @@
+{% extends 'layout.html' %} {% block main_content %}
+
+<main class="bg-success-subtle">
+  <!-- Account modal -->
+  <div
+    class="modal fade"
+    id="add_account"
+    tabindex="-1"
+    aria-labelledby="add_account"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #baa68f">
+          <h1 class="modal-title fs-5" id="add_account">
+            New account
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body bg-success-subtle">
+          <form
+            id="account"
+            class="flex-column col-12 bg-light p-4 pt-3 pt-lg-0 rounded-4"
+            action="/accounts"
+            method="post"
+          >
+            <div class="my-auto w-100">
+              <div class="mb-3">
+                <label for="account_type" class="form-label"
+                  >Type</label
+                >
+                <select
+                  class="form-select"
+                  name="account_type"
+                  id="account_type"
+                >
+                  <option value="Checking account">Checking</option>
+                  <option value="Salary account">Salary</option>
+                  <option value="Money market account">
+                    Money market
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="account_bank" class="form-label"
+                  >Bank</label
+                >
+                <select
+                  class="form-select"
+                  name="account_bank"
+                  id="account_bank"
+                >
+                  <option value="Citibank">Citibank</option>
+                  <option value="Bank of America">
+                    Bank of America
+                  </option>
+                  <option value="Goldman Sachs">Goldman Sachs</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="account_name" class="form-label"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  s
+                  class="form-control"
+                  name="account_name"
+                  id="account_name"
+                />
+              </div>
+              <div class="d-flex">
+                <button
+                  type="submit"
+                  class="btn btn-success mx-auto mb-3 mb-lg-0 px-5"
+                >
+                  Submit
+                </button>
+              </div>
+              <input type="hidden" name="action" value="register" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" style="background-color: #baa68f">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div
+      class="row p-lg-5 h-100 justify-content-center gap-4"
+      style="min-height: 84vh"
+    >
+      <!-- Accounts -->
+      <div
+        class="p-0 col-12 col-lg-7 col-xl-8 d-flex flex-column"
+      >
+        <!-- Header -->
+        <div
+          class="container_header d-flex p-2"
+          style="background-color: #baa68f"
+        >
+          <p class="h2 m-0 text-center flex-grow-1">Accounts</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="d-flex p-3 justify-content-center gap-2 bg-light">
+          <button
+            type="button"
+            class="btn btn-success text-white mx-auto px-5"
+            data-bs-toggle="modal"
+            data-bs-target="#add_account"
+          >
+            Add account
+          </button>
+        </div>
+
+        <!-- Account cards -->
+        <div class="flex-grow-1 bg-light">
+          {% for account in accounts %}
+          <div class="card">
+            <div class="card-body">
+              <p>{{ account.name }}</p>
+              <p>{{ account.type }}</p>
+              <p>{{ account.bank }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Auxiliary Info -->
+      {% include 'auxiliary.html' %}
+    </div>
+  </section>
+</main>
+
+{% endblock %}

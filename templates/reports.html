@@ -1,0 +1,89 @@
+{% extends 'layout.html' %} {% block main_content %}
+
+<main class="bg-success-subtle">
+  <section>
+    <div
+      class="row p-lg-5 h-100 justify-content-center gap-4"
+      style="min-height: 84vh"
+    >
+      <!-- Reports -->
+      <div
+        class="p-0 col-12 col-lg-7 col-xl-8 d-flex flex-column"
+      >
+        <!-- Header -->
+        <div
+          class="container_header d-flex p-2 "
+          style="background-color: #baa68f"
+        >
+          <h1 class="h2 m-0 text-center flex-grow-1">Reports</h1>
+        </div>
+
+        <!-- Tools -->
+        <div class="d-flex p-3 justify-content-center gap-2 bg-light">
+          <!-- Filters -->
+          <form
+            action="/reports"
+            method="post"
+            class="d-flex flex-wrap justify-content-center gap-2"
+          >
+            <input
+              class="form-control w-25"
+              type="text"
+              placeholder="Year - YYYY"
+              value="{{ year }}"
+              name="year"
+              id="year"
+            />
+
+            <select class="form-select w-50" name="month" id="month">
+            {% for named_month in months %}
+              <option value="{{ named_month }}" 
+              {% if month == named_month %} selected {% endif %}>
+              {{ named_month }}
+              </option>
+            {% endfor %}
+            </select>
+
+            <select
+            class="form-select"
+            style="width: 120px;"
+            name="tsct_type"
+            id="tsct_type"
+            >
+              <option value="Expense" 
+              {% if type == "Expense" %} selected {% endif %}
+              >Expense
+              </option>
+              <option value="Income" 
+              {% if type == "Income" %} selected {% endif %}
+              >Income
+              </option>
+            </select>
+
+            <button
+              type="submit"
+              class="btn btn-secondary text-white px-4"
+              style="white-space: nowrap;"
+            >
+              Apply filters
+            </button>
+          </form>
+        </div>
+
+        <!-- Pie chart -->
+        <div
+          class="container_body d-flex justify-content-center p-4 gap-4 bg-light"
+        >
+          <div class="pie_chart">
+            {{ pie_chart_html | safe }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Auxiliary Info -->
+      {% include 'auxiliary.html' %}
+    </div>
+  </section>
+</main>
+
+{% endblock %}

@@ -1,0 +1,238 @@
+{% extends 'layout.html' %} {% block main_content %}
+
+<main class="bg-success-subtle">
+  <!-- Entry modal -->
+  <div
+    class="modal fade"
+    id="add_entry"
+    tabindex="-1"
+    aria-labelledby="add_entry"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #baa68f">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            New entry
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body bg-success-subtle">
+          <form
+            id="entry"
+            class="flex-column col-12 bg-light p-4 pt-3 pt-lg-0 rounded-4"
+            action="/financial_log"
+            method="post"
+          >
+            <div class="my-auto w-100">
+              <div class="mb-3">
+                <label for="transaction_type" class="form-label"
+                  >Type</label
+                >
+                <select
+                  class="form-select"
+                  name="transaction_type"
+                  id="transaction_type"
+                >
+                  <option value="Expense">Expense</option>
+                  <option value="Income">Income</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="transaction_account" class="form-label"
+                  >Account</label
+                >
+                <select
+                  class="form-select"
+                  name="transaction_account"
+                  id="transaction_account"
+                >
+                  {% for account in accounts %}
+                  <option value="{{ account.id }}" }>
+                    {{ account.name }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="transaction_value" class="form-label"
+                  >Value</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  name="transaction_value"
+                  id="transaction_value"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="transaction_details" class="form-label"
+                  >Details</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="transaction_details"
+                  id="transaction_details"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="transaction_category" class="form-label"
+                  >Category</label
+                >
+                <select
+                  class="form-select"
+                  name="transaction_category"
+                  id="transaction_category"
+                >
+                  {% for category in categories %}
+                  <option value="{{ category.id }}" }>
+                    {{ category.name }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="transaction_date" class="form-label"
+                  >Date</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  name="transaction_date"
+                  id="transaction_date"
+                />
+              </div>
+              <div class="d-flex">
+                <button
+                  type="submit"
+                  class="btn btn-success mx-auto mb-3 mb-lg-0 px-5"
+                >
+                  Submit
+                </button>
+              </div>
+              <input type="hidden" name="action" value="add_entry" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" style="background-color: #baa68f">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div
+      class="row p-lg-5 justify-content-center gap-4"
+      style="min-height: 84vh"
+    >
+      <!-- Log -->
+      <div
+        id="log"
+        class="p-0 col-12 col-lg-7 col-xl-8 d-flex flex-column"
+      >
+        <!-- Header -->
+        <div
+          class="container_header d-flex p-2"
+          style="background-color: #baa68f"
+        >
+          <p class="h2 m-0 text-center flex-grow-1">Financial Log</p>
+        </div>
+
+        <!-- Tools -->
+        <div class="d-flex flex-wrap p-3 justify-content-center gap-2 bg-light">
+          <!-- Filters -->
+          <form
+            action="/financial_log"
+            method="post"
+            class="d-flex justify-content-center gap-2"
+          >
+            <input
+              class="form-control w-25"
+              type="text"
+              placeholder="Year - YYYY"
+              value="{{ current_year }}"
+              name="year"
+              id="year"
+            />
+
+            <select class="form-select w-50" name="month" id="month">
+            {% for month in months %}
+              <option value="{{ month }}" 
+              {% if current_month == month %} selected {% endif %}>
+              {{ month }}
+              </option>
+            {% endfor %}
+            </select>
+
+            <input type="hidden" name="action" value="filter">
+
+            <button
+              type="submit"
+              class="btn btn-secondary text-white px-4"
+              style="white-space: nowrap;"
+            >
+              Apply filter
+            </button>
+          </form>
+
+          <!-- Add entry -->
+          <button
+            type="button"
+            class="btn btn-success text-white px-5 ms-xl-auto"
+            data-bs-toggle="modal"
+            data-bs-target="#add_entry"
+          >
+            Add entry
+          </button>
+        </div>
+
+        <!-- Table -->
+        <div class="container_body flex-grow-1 table-responsive bg-light">
+          <table class="table table-hover table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Details</th>
+                <th>Value</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Account</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for transaction, account, category in transactions %}
+              <tr>
+                <td>{{ transaction.type }}</td>
+                <td>{{ transaction.details }}</td>
+                <td>${{ '{:,.2f}'.format(transaction.value) }}</td>
+                <td>{{ transaction.date }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ account.name }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
+
+      <!-- Auxiliary content -->
+      {% include 'auxiliary.html' %}
+    </div>
+  </section>
+</main>
+
+{% endblock %}

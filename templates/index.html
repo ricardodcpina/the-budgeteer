@@ -1,0 +1,142 @@
+{% extends 'layout.html' %} {% block login %}
+
+<main class="access bg-success-subtle">
+  <section>
+    <div
+      class="row p-lg-5 justify-content-center"
+      style="min-height: 84vh"
+    >
+      <!-- Banner -->
+      <div class="banner d-flex col-12 col-lg-5 col-xl-4">
+        <div class="banner-title bg-body-secondary my-auto w-100">
+          <p class="h2 text-center">
+            Save money today. Get rich tomorrow.
+          </p>
+        </div>
+      </div>
+
+      <!-- Log In Form (Default) -->
+      <form
+        id="login"
+        class="login flex-column col-12 col-lg-5 col-xl-4 bg-light px-5"
+        action="/"
+        method="post"
+      >
+        <div class="my-auto w-100">
+          <h2 class="text-center">Log In</h2>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              id="username"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              id="password"
+            />
+          </div>
+          <div class="d-flex">
+            <button
+              type="submit"
+              class="btn btn-success mx-auto mb-3 mb-lg-0 px-5"
+            >
+              Submit
+            </button>
+          </div>
+          <input type="hidden" name="action" value="login" />
+        </div>
+      </form>
+
+      <!-- Registration Form -->
+      <form
+        id="register"
+        class="flex-column col-12 col-lg-5 col-xl-4 bg-light px-5 pt-3 pt-lg-0"
+        action="/"
+        method="post"
+      >
+        <div class="my-auto w-100">
+          <h2 class="text-center">Register</h2>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              id="username"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="text"
+              class="form-control"
+              name="email"
+              id="email"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              id="password"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="confirmation" class="form-label"
+              >Confirm password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              name="confirmation"
+              id="confirmation"
+            />
+          </div>
+          <div class="d-flex">
+            <button
+              type="submit"
+              class="btn btn-success mx-auto mb-3 mb-lg-0 px-5"
+            >
+              Submit
+            </button>
+          </div>
+          <input type="hidden" name="action" value="register" />
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<script>
+  const registerBtn = document.getElementById('registerBtn');
+  const loginBtn = document.getElementById('loginBtn');
+  const registerForm = document.getElementById('register');
+  const loginForm = document.getElementById('login');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loginForm.style.display = 'flex';
+    registerForm.style.display = 'none';
+  });
+
+  registerBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    registerForm.style.display = 'flex';
+    loginForm.style.display = 'none';
+  });
+
+  loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'flex';
+  });
+</script>
+{% endblock %}
