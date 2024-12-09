@@ -201,7 +201,7 @@
 
         <!-- Table -->
         <div class="container_body flex-grow-1 table-responsive bg-light">
-          <table class="table table-hover table-striped table-bordered">
+          <table class="table table-hover table-bordered">
             <thead>
               <tr>
                 <th>Type</th>
@@ -214,7 +214,7 @@
             </thead>
             <tbody>
               {% for transaction, account, category in transactions %}
-              <tr>
+              <tr class="{% if transaction.type == 'Income' %}row-income{% else %}row-expense{% endif %}">
                 <td>{{ transaction.type }}</td>
                 <td>{{ transaction.details }}</td>
                 <td>${{ '{:,.2f}'.format(transaction.value) }}</td>

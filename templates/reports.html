@@ -72,11 +72,15 @@
 
         <!-- Pie chart -->
         <div
-          class="container_body d-flex justify-content-center p-4 gap-4 bg-light"
+          class="container_body flex-grow-1 d-flex justify-content-center align-items-center p-4 gap-4 bg-light"
         >
+          {% if pie_chart_html %}
           <div class="pie_chart">
             {{ pie_chart_html | safe }}
           </div>
+          {% else %}
+            <p>No transactions found with specified filters.</p>
+          {% endif %}
         </div>
       </div>
 

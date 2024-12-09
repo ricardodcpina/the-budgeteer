@@ -37,6 +37,10 @@ def get_categories_statistics(
         .all()
     )
 
+    # Check if data is empty
+    if category_amounts.__len__() == 0:
+        return None
+
     # Calculate month total based on each category
     monthly_total = sum(
         category_row.total_value for category_row in category_amounts

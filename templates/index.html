@@ -42,6 +42,16 @@
               id="password"
             />
           </div>
+
+          {% with messages = get_flashed_messages() %} {% if messages
+          %}
+          <div class="alert alert-danger m-0 mb-4">
+            {% for message in messages %}
+            <p class="m-0">{{ message }}</p>
+            {% endfor %}
+          </div>
+          {% endif %} {% endwith %}
+
           <div class="d-flex">
             <button
               type="submit"
@@ -101,6 +111,16 @@
               id="confirmation"
             />
           </div>
+
+          {% with messages = get_flashed_messages() %} {% if messages
+          %}
+          <div class="alert alert-danger m-0 mb-4">
+            {% for message in messages %}
+            <p class="m-0">{{ message }}</p>
+            {% endfor %}
+          </div>
+          {% endif %} {% endwith %}
+
           <div class="d-flex">
             <button
               type="submit"
@@ -123,8 +143,16 @@
   const loginForm = document.getElementById('login');
 
   document.addEventListener('DOMContentLoaded', () => {
-    loginForm.style.display = 'flex';
-    registerForm.style.display = 'none';
+    const urlParams = new URLSearchParams(window.location.search);
+    const formParam = urlParams.get('form');
+
+    if (formParam === 'register') {
+      loginForm.style.display = 'none';
+      registerForm.style.display = 'flex';
+    } else {
+      loginForm.style.display = 'flex';
+      registerForm.style.display = 'none';
+    }
   });
 
   registerBtn.addEventListener('click', (e) => {

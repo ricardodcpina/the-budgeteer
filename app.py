@@ -1,5 +1,13 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Flask, session, render_template, request, redirect, url_for
+from flask import (
+    Flask,
+    flash,
+    session,
+    render_template,
+    request,
+    redirect,
+    url_for,
+)
 from sqlalchemy import func
 from datetime import datetime
 import plotly.graph_objects as go
@@ -72,6 +80,11 @@ def index():
             username = request.form["username"]
             password = request.form["password"]
 
+            # Verify blank fields
+            if not username or not password:
+                flash("Required fields are missing.")
+                return redirect(url_for("index", form="login"))
+
             # Check if user exists
             user = User.query.filter_by(username=username).first()
 
@@ -81,7 +94,8 @@ def index():
                 session["username"] = user.username
                 return redirect(url_for("financial_log"))
             else:
-                return "Invalid credentials."
+                flash("Invalid credentials.")
+                return redirect(url_for("index", form="login"))
 
         elif action == "register":
 
@@ -91,15 +105,23 @@ def index():
             password = request.form["password"]
             confirmation = request.form["confirmation"]
 
+            # Verify blank fields
+            if not username or not password or not password or not confirmation:
+                flash("Required fields are missing.")
+                return redirect(url_for("index", form="register"))
+
             # Check if email, username already exists and if passwords match
             if User.query.filter_by(email=email).first():
-                return "Email already exists!"
+                flash("Email already exists.")
+                return redirect(url_for("index", form="register"))
 
             if User.query.filter_by(username=username).first():
-                return "Username already exists!"
+                flash("Username already exists.")
+                return redirect(url_for("index", form="register"))
 
             if password != confirmation:
-                return "Passwords do not match!"
+                flash("Passwords do not match.")
+                return redirect(url_for("index", form="register"))
 
             # Hash the password for storing in database
             hashed_password = generate_password_hash(password)
@@ -133,15 +155,10 @@ def logout():
 # Route for managing transactions
 @app.route("/financial_log", methods=["GET", "POST"])
 def financial_log():
-    # Fetch user id, registered accounts, categories and balance
+    # Fetch user id, registered accounts and categories
     user_id = session.get("user_id")
     accounts = Account.query.filter_by(user_id=user_id).all()
     categories = Category.query.filter_by(user_id=user_id).all()
-    total_balance = (
-        db.session.query(func.sum(Account.balance))
-        .filter_by(user_id=user_id)
-        .scalar()
-    ) or 0.0
 
     # Extract current date
     date = datetime.now()
@@ -190,6 +207,13 @@ def financial_log():
 
             # Commit changes in database
             db.session.commit()
+
+    # Fetch total balance of accounts
+    total_balance = (
+        db.session.query(func.sum(Account.balance))
+        .filter_by(user_id=user_id)
+        .scalar()
+    ) or 0.0
 
     # Fetch transactions for the current date or the filtered date
     transactions = (
@@ -286,7 +310,11 @@ def reports():
     )
 
     # Generate chart based on category statistics
-    pie_chart_html = create_pie_chart(categories_statistics)
+    pie_chart_html = (
+        create_pie_chart(categories_statistics)
+        if categories_statistics
+        else None
+    )
 
     return render_template(
         "reports.html",

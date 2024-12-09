@@ -69,7 +69,7 @@
   class="d-flex flex-column col-12 col-md-6 col-lg-3 col-xl-2 p-0 gap-4"
 >
   <!-- Balance -->
-  <div id="balance">
+  <div class="d-flex flex-column flex-grow-1" id="balance">
     <!-- Header -->
     <div
       class="balance_header d-flex p-2"
@@ -78,8 +78,8 @@
       <p class="h4 m-0 text-center flex-grow-1">Balance</p>
     </div>
     <!-- Content -->
-    <div class="balance_body bg-light p-2">
-      <table class="table">
+    <div class="flex-grow-1 balance_body bg-light p-2">
+      <table class="table table-hover table-striped table-bordered">
         <thead>
           <tr>
             <th>Account</th>
@@ -118,7 +118,7 @@
     <div class="d-flex py-2 justify-content-center bg-light">
       <button
         type="button"
-        class="btn btn-success text-white mx-auto px-5"
+        class="btn btn-success text-white mx-auto px-4"
         data-bs-toggle="modal"
         data-bs-target="#add_category"
       >
@@ -127,8 +127,8 @@
     </div>
 
     <!-- Content -->
-    <div class="category_body bg-light p-2">
-      <table class="table">
+    <div class="flex-grow-1 category_body bg-light p-2">
+      <table class="table table-hover table-striped table-bordered">
         <tbody>
           {% for category in categories %}
           <tr>

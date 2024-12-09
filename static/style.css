@@ -1,5 +1,5 @@
 * {
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 html,
@@ -35,6 +35,18 @@ section {
 .row {
   margin-left: 0;
   max-width: 100%;
+}
+
+.row-expense {
+  background-color: #ed9d9d28;
+}
+
+.row-income {
+  background-color: #aaed9d28;
+}
+
+.table {
+  --bs-table-bg: transparent;
 }
 
 .login,
