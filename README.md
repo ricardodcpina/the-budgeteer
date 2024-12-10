@@ -11,7 +11,7 @@ I hope The Budgeteer comes in handy for you like it is for me!
 
 #### Description
 
-Budgeteer is a personal financial management web application that allows you to take over control of your finances instead of the other way around.
+Budgeteer is a personal financial management web application 100% responsive for all devices, that allows you to take over control of your finances instead of the other way around.
 
 ##### Technologies used
 
