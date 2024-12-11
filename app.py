@@ -1,3 +1,4 @@
+import os
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import (
     Flask,
@@ -19,7 +20,9 @@ from helpers import get_categories_statistics, create_pie_chart
 app = Flask(__name__)
 
 # Configure the database URI and secrey key for sessions
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///budgeteer.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+    "DATABASE_URL", "sqlite:///budgeteer.db"
+)
 app.config["SECRET_KEY"] = "mysecretkey"
 
 # Initialize database

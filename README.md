@@ -1,5 +1,5 @@
 # The Budgeteer
-#### Video demo: (Coming soon)<URL HERE>
+#### Video demo: [The-Budgeteer](https://youtu.be/kYJ20t2Xaho)
 
 The construction of this full-stack web application was motivated by the frequent necessity of managing my own financial transactions every single month. Also, it was an opportunity for me to work with different languages and tools, like Python, Flask and other technologies. 
 
