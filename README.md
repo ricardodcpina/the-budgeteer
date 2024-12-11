@@ -1,7 +1,10 @@
 # The Budgeteer
-#### Video demo: [The-Budgeteer](https://youtu.be/kYJ20t2Xaho)
 
-The construction of this full-stack web application was motivated by the frequent necessity of managing my own financial transactions every single month. Also, it was an opportunity for me to work with different languages and tools, like Python, Flask and other technologies. 
+##### Live demo: https://the-budgeteer-0444be2f4856.herokuapp.com/
+
+##### Video demo: https://youtu.be/kYJ20t2Xaho
+
+The construction of this full-stack web application was motivated by the frequent necessity of managing my own financial transactions every single month. Also, it was an opportunity for me to work with different languages and tools, like Python, Flask and other technologies.
 
 I believe that financial education is imperative for every individual and unfortunately is not a widespread topic among Brazilian citizens. This tool could help you get on track with your expenses/incomes and make some future planning become possible if you discipline yourself enough. You can turn some of your lifelong dreams into reality - whether it is a house, a car or even traveling around the world.
 
@@ -43,10 +46,10 @@ For better understanding of each file, the source code is properly commented wit
 #### Getting started
 
 1 - Check if Python and pip are installed beforehand. If yes, you should get the version of each running the commands below in the terminal. If not, you can download them [here](https://www.python.org/downloads/).
-    
+
 For Windows:
 
-    python --version 
+    python --version
     pip --version
 
 For Mac/Linux:
@@ -66,7 +69,7 @@ Windows:
 
     python -m venv .venv
     .venv\Scripts\activate
-    
+
 Mac/Linux:
 
     python3 -m venv .venv
@@ -102,11 +105,11 @@ You may want to navigate to accounts page first to create an account so you can 
 
 **Financial Log Page**
 
-This will be the page where all of your registered transactions, whether incomes or expenses, will be displayed. 
+This will be the page where all of your registered transactions, whether incomes or expenses, will be displayed.
 
 Before adding any transactions, you first need to create an account to associate the transaction with.
 
-The add entry button will open a modal with the required data to register a transaction: 
+The add entry button will open a modal with the required data to register a transaction:
 
 - A transaction type defining if it is an expense or an income
 - An account it will be associated with
@@ -135,10 +138,10 @@ Now you have all the requirements to add a transaction in the Financial Log page
 
 **Reports Page**
 
-Reports are generated based on the transactions you registered. The pie chart will be displayed according to the current month and year, but you can change the date and filter by transaction type if needed. 
+Reports are generated based on the transactions you registered. The pie chart will be displayed according to the current month and year, but you can change the date and filter by transaction type if needed.
 
 The chart is divided by categories and shows a percentage of the total spent/received in that month. You can opt in or out of any category clicking on each of them at the chart's legend. The chart shows tooltips on mouse hover.
 
 #### This is CS50!
 
-This should cover all the functionalities provided by Budgeteer at the present moment! I hope this application can help you improve your financial management, mitigating unnecessary costs and keeping track of where you spend the most. 
+This should cover all the functionalities provided by Budgeteer at the present moment! I hope this application can help you improve your financial management, mitigating unnecessary costs and keeping track of where you spend the most.
