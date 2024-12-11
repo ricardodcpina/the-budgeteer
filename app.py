@@ -101,7 +101,6 @@ def index():
                 return redirect(url_for("index", form="login"))
 
         elif action == "register":
-
             # Extract login data
             username = request.form["username"]
             email = request.form["email"]
@@ -179,37 +178,48 @@ def financial_log():
         if action == "add_entry":
             # Extract transaction data
             tsct_type = request.form["transaction_type"]
-            tsct_acc = request.form["transaction_account"]
+            tsct_acc = request.form.get("transaction_account")
             tsct_value = request.form["transaction_value"]
             tsct_dtl = request.form["transaction_details"]
-            tsct_ctg = request.form["transaction_category"]
+            tsct_ctg = request.form.get("transaction_category")
             tsct_date = request.form["transaction_date"]
 
-            tsct_date = datetime.strptime(tsct_date, "%Y-%m-%d").date()
+            if tsct_date:
+                tsct_date = datetime.strptime(tsct_date, "%Y-%m-%d").date()
 
-            # Create a new transaction
-            new_tsct = Transaction(
-                type=tsct_type,
-                details=tsct_dtl,
-                date=tsct_date,
-                value=tsct_value,
-                category_id=tsct_ctg,
-                account_id=tsct_acc,
-            )
+            if (
+                not tsct_value
+                or not tsct_dtl
+                or not tsct_date
+                or not tsct_acc
+                or not tsct_ctg
+                or not tsct_type
+            ):
+                flash("All fields are required.")
+            else:
+                # Create a new transaction
+                new_tsct = Transaction(
+                    type=tsct_type,
+                    details=tsct_dtl,
+                    date=tsct_date,
+                    value=tsct_value,
+                    category_id=tsct_ctg,
+                    account_id=tsct_acc,
+                )
 
-            # Add new transaction to database
-            db.session.add(new_tsct)
+                # Add new transaction to database
+                db.session.add(new_tsct)
 
-            # Update account balance according to transaction type
-            account = Account.query.get(tsct_acc)
-            if account:
-                if tsct_type == "Income":
-                    account.balance += float(tsct_value)
-                elif tsct_type == "Expense":
-                    account.balance -= float(tsct_value)
+                # Update account balance according to transaction type
+                account = Account.query.get(tsct_acc)
+                if account:
+                    if tsct_type == "Income":
+                        account.balance += float(tsct_value)
+                    elif tsct_type == "Expense":
+                        account.balance -= float(tsct_value)
 
-            # Commit changes in database
-            db.session.commit()
+                # Commit changes in database
+                db.session.commit()
 
     # Fetch total balance of accounts
     total_balance = (
