@@ -115,7 +115,16 @@
     </div>
 
     <!-- Category + -->
-    <div class="d-flex py-2 justify-content-center bg-light">
+    <div
+      class="d-flex flex-column py-2 justify-content-center bg-light"
+    >
+      <!-- Add entry -->
+      {% if not categories %}
+      <div class="alert alert-info m-0 mb-2 mx-auto mx-lg-4">
+        <p class="m-0 text-center">Create a category to add an entry!</p>
+      </div>
+      {% endif %}
+
       <button
         type="button"
         class="btn btn-success text-white mx-auto px-4"
@@ -127,7 +136,7 @@
     </div>
 
     <!-- Content -->
-    <div class="flex-grow-1 category_body bg-light p-2">
+    <div class="flex-grow-1 category_body bg-light p-2 mb-4 mb-lg-0">
       <table class="table table-hover table-striped table-bordered">
         <tbody>
           {% for category in categories %}

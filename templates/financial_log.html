@@ -108,6 +108,14 @@
                   id="transaction_date"
                 />
               </div>
+              {% with messages = get_flashed_messages() %} {% if messages
+                %}
+                <div class="alert alert-danger m-0 mb-4">
+                  {% for message in messages %}
+                  <p class="m-0">{{ message }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %} {% endwith %}
               <div class="d-flex">
                 <button
                   type="submit"
@@ -152,7 +160,7 @@
         </div>
 
         <!-- Tools -->
-        <div class="d-flex flex-wrap p-3 justify-content-center gap-2 bg-light">
+        <div class="d-flex flex-wrap flex-column flex-lg-row p-3 justify-content-center gap-2 bg-light">
           <!-- Filters -->
           <form
             action="/financial_log"
@@ -189,18 +197,29 @@
           </form>
 
           <!-- Add entry -->
-          <button
+            {% if not accounts %}
+            <div class="alert alert-info m-0 mx-auto mx-lg-0">
+              <p class="m-0 text-center" >
+                Create an account to add an entry! Click <a class="text-decoration-none fw-bold" style="color: black" href="/accounts"> here</a>!</p>
+            </div>
+            {% endif %}
+
+            <button
             type="button"
-            class="btn btn-success text-white px-5 ms-xl-auto"
+            class="btn btn-success text-white px-5 mx-auto mx-lg-0"
             data-bs-toggle="modal"
             data-bs-target="#add_entry"
-          >
-            Add entry
-          </button>
+            {% if not accounts or not categories %}
+              disabled
+            {% endif %}
+            >
+              Add entry
+            </button>
         </div>
 
         <!-- Table -->
-        <div class="container_body flex-grow-1 table-responsive bg-light">
+        <div class="container_body d-flex justify-content-center align-items-center flex-grow-1 table-responsive bg-light">
+          {% if transactions %}
           <table class="table table-hover table-bordered">
             <thead>
               <tr>
@@ -225,8 +244,11 @@
               {% endfor %}
             </tbody>
           </table>
+          {% else %}
+            <p>No transactions found with specified filters.</p>
+          {% endif %}
         </div>
-        
+
       </div>
 
       <!-- Auxiliary content -->

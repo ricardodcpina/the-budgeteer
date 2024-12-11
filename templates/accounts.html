@@ -101,13 +101,11 @@
 
   <section>
     <div
-      class="row p-lg-5 h-100 justify-content-center gap-4"
+      class="row p-lg-5 justify-content-center gap-4"
       style="min-height: 84vh"
     >
       <!-- Accounts -->
-      <div
-        class="p-0 col-12 col-lg-7 col-xl-8 d-flex flex-column"
-      >
+      <div class="p-0 col-12 col-lg-7 col-xl-8 d-flex flex-column">
         <!-- Header -->
         <div
           class="container_header d-flex p-2"
@@ -116,7 +114,7 @@
           <p class="h2 m-0 text-center flex-grow-1">Accounts</p>
         </div>
 
-        <!-- Filters -->
+        <!-- Tools -->
         <div class="d-flex p-3 justify-content-center gap-2 bg-light">
           <button
             type="button"
@@ -128,18 +126,23 @@
           </button>
         </div>
 
-        <!-- Account cards -->
-        <div class="flex-grow-1 bg-light">
-          {% for account in accounts %}
-          <div class="card">
+        <div
+          class="container_body d-flex justify-content-center align-items-start flex-grow-1 bg-light"
+        >
+          {% if accounts %} {% for account in accounts %}
+          <div class="card flex-grow-1">
             <div class="card-body">
               <p>{{ account.name }}</p>
               <p>{{ account.type }}</p>
               <p>{{ account.bank }}</p>
             </div>
           </div>
-          {% endfor %}
+          {% endfor %} {% else %}
+          <p>No accounts were found.</p>
+          {% endif %}
         </div>
+
+        <!-- Account cards -->
       </div>
 
       <!-- Auxiliary Info -->
