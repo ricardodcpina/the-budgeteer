@@ -139,7 +139,7 @@ def index():
 
             # Store user ID and name in session
             session["user_id"] = new_user.id
-            session["user_id"] = new_user.username
+            session["username"] = new_user.username
 
             return redirect(url_for("financial_log"))
 
@@ -275,6 +275,11 @@ def accounts():
         acc_bank = request.form["account_bank"]
         acc_name = request.form["account_name"]
 
+        # Validate category name
+        if not acc_name:
+            flash("Account name is required.")
+            return redirect(url_for("accounts", show_modal="add_account"))
+
         # Create new account
         new_account = Account(
             type=acc_type, bank=acc_bank, name=acc_name, user_id=user_id
@@ -355,6 +360,11 @@ def categories():
         # Fetch form data
         ctg_name = request.form["category_name"]
 
+        # Validate category name
+        if not ctg_name:
+            flash("Category name is required.")
+            return redirect(request.referrer + "?show_modal=add_category")
+
         # Create new category
         new_category = Category(name=ctg_name, user_id=user_id)
 
@@ -362,6 +372,6 @@ def categories():
         db.session.add(new_category)
         db.session.commit()
 
-        return redirect(url_for("financial_log"))
+        return redirect(request.referrer)
 
-    return redirect(url_for("financial_log"))
+    return redirect(request.referrer)

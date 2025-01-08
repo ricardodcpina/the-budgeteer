@@ -74,6 +74,14 @@
                   id="account_name"
                 />
               </div>
+              {% with messages = get_flashed_messages() %} {% if
+              messages %}
+              <div class="alert alert-danger m-0 mb-4">
+                {% for message in messages %}
+                <p class="m-0">{{ message }}</p>
+                {% endfor %}
+              </div>
+              {% endif %} {% endwith %}
               <div class="d-flex">
                 <button
                   type="submit"

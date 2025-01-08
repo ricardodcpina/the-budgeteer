@@ -48,9 +48,7 @@
           class="collapse navbar-collapse"
           id="navbarSupportedContent"
         >
-          <ul
-            class="navbar-nav container-fluid justify-content-end"
-          >
+          <ul class="navbar-nav container-fluid justify-content-end">
             <div class="d-flex justify-content-end py-2 gap-1">
               <li class="nav-item">
                 <a class="btn btn-success" id="loginBtn">Log In</a>
@@ -66,10 +64,7 @@
       </nav>
       {% else %}
       <!-- Offcanvas navbar -->
-      <nav
-        class="navbar fixed-top"
-        style="background-color: #baa68f;"
-      >
+      <nav class="navbar fixed-top" style="background-color: #baa68f">
         <div class="container-fluid">
           <!-- Logo -->
           <div class="d-flex align-items-center">
@@ -170,6 +165,41 @@
     <footer class="vw-100" style="background-color: #baa68f">
       <p class="m-0 p-4 text-center">Developed by Ricardo Pina</p>
     </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const modalId = urlParams.get('show_modal');
+
+        if (modalId) {
+          const modalElement = document.getElementById(modalId);
+          if (modalElement) {
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+
+            const newUrl =
+              window.location.pathname + window.location.hash;
+            history.replaceState(null, '', newUrl); // Remove o query parameter
+          }
+        }
+
+        const removeFlashMessages = () => {
+          const flashMessages =
+            document.querySelectorAll('.alert-danger');
+          flashMessages.forEach((message) => {
+            message.remove();
+          });
+        };
+
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach((modalElement) => {
+          modalElement.addEventListener(
+            'hidden.bs.modal',
+            removeFlashMessages
+          );
+        });
+      });
+    </script>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
