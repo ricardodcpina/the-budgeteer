@@ -30,7 +30,8 @@ db.init_app(app)
 
 # Create database tables
 with app.app_context():
-    db.create_all()
+    if not db.engine.dialect.has_table(db.engine, "user"):
+        db.create_all()
 
 # List of month names for referencing
 MONTHS = [
