@@ -9,7 +9,7 @@ from flask import (
     redirect,
     url_for,
 )
-from sqlalchemy import func
+from sqlalchemy import func, inspect
 from datetime import datetime
 import plotly.graph_objects as go
 
@@ -30,7 +30,7 @@ db.init_app(app)
 
 # Create database tables
 with app.app_context():
-    if not db.engine.dialect.has_table(db.engine, "user"):
+    if not inspect(db.engine).has_table('user'):
         db.create_all()
 
 # List of month names for referencing
