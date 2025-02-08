@@ -30,8 +30,7 @@ db.init_app(app)
 
 # Create database tables
 with app.app_context():
-    if not inspect(db.engine).has_table('user'):
-        db.create_all()
+    db.create_all()
 
 # List of month names for referencing
 MONTHS = [
