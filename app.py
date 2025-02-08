@@ -30,7 +30,7 @@ db.init_app(app)
 
 # Create database tables
 with app.app_context():
-    db.create_all(checkfirst=True)
+    db.create_all()
 
 # List of month names for referencing
 MONTHS = [
