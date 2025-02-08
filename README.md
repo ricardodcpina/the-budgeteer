@@ -1,6 +1,6 @@
 # The Budgeteer
 
-##### Live demo: https://the-budgeteer-009c81f67324.herokuapp.com/
+##### Live demo: https://the-budgeteer-c0c0c541b396.herokuapp.com/
 
 ##### Video demo: https://youtu.be/kYJ20t2Xaho
 
